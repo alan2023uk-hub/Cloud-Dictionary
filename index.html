@@ -191,8 +191,8 @@
     
     <div class="controls">
         <div class="import-options">
-            <label><input type="radio" name="importMode" value="replace" checked> 🔄 替換現有資料</label>
-            <label><input type="radio" name="importMode" value="append"> ➕ 附加到現有資料</label>
+            <label><input type="radio" name="importMode" value="append" checked> ➕ 附加到現有資料</label>
+            <label><input type="radio" name="importMode" value="replace"> 🔄 替換現有資料</label>
         </div>
         <div class="btn-container">
             <label for="csvFileInput" class="upload-btn">📁 點此匯入 CSV 檔案</label>
@@ -205,6 +205,7 @@
         
         <select id="sortSelect">
             <option value="default">🕒 預設排序 (原始順序)</option>
+          
             <option value="asc">🔤 單字排序 (A → Z 遞增)</option>
             <option value="desc">🔤 單字排序 (Z → A 遞減)</option>
         </select>
@@ -223,7 +224,6 @@
        
         const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
         let dictionaryData = [];
-        // 對照表：將 CSV 的原始中英文欄位名稱，精準映射至 Supabase 的規範化欄位
         const fieldMapping = {
             'Word or Phrase': 'word_or_phrase',
             'Translation': 'translation',
@@ -276,7 +276,6 @@
             document.getElementById('statusText').innerText = '正在處理檔案...';
             let allNewData = [];
 
-            // 異步讀取所有選取的檔案並合併數據
             for (let i = 0; i < files.length; i++) {
                 const text = await new Promise(resolve => {
                     const reader = new FileReader();
