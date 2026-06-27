@@ -280,7 +280,7 @@
                 const text = await new Promise(resolve => {
                     const reader = new FileReader();
                     reader.onload = event => resolve(event.target.result);
-                    reader.readAsText(files[i]);
+                    reader.readAsText(files[i], 'UTF-8');
                 });
                 allNewData = allNewData.concat(parseCSV(text));
             }
@@ -392,6 +392,7 @@
         }
 
         function parseCSV(text) {
+            text = text.replace(/^\uFEFF/, '');
             const result = [];
             let row = [];
             let currentStr = '';
